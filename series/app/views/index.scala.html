@@ -1,7 +1,66 @@
-@(message: String)
-
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
-
-}
+@(series: List[Serie])
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Acompanhamento de seriados</title>
+        <meta charset="UTF-8">
+        <meta name=description content="">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+		<link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet" media="screen">        
+ 		<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" rel="javascript" media="screen"></script>
+ 		<script src="@routes.Assets.at("javascripts/jquery-extra.js")" rel="javascript" media="screen"></script>
+    </head>
+    <body>
+    	<div class="content"><br>
+    		<div class="jumbotron">
+    			<h1 style="text-align: center">Sistema de acompanhamento de seriados, desenhos e afins.</h1>
+    		</div>
+    		<div class="row" style="text-align: center;">
+    			<div class="col-sm-3" style="left: 10%;">
+    				<div class="panel panel-default">
+		    			<h1 class="panel-title" style="font-size: xx-large;">Séries</h1>
+		    			@for(serie <- series){
+		    				@if(!serie.isAcompanhada()){
+		    				<form method="post" action="@routes.Application.acompanharSerie()">    							
+			    					<input type="hidden" name="id" value="@serie.getId()">
+					            	<button type="submit" class="close" id="acompanharSerie"><span aria-hidden="true">&#10003;</span>
+					            	<span class="sr-only">Acompanhar serie</span></button>
+					        	</form>
+		    				<div id="showHide" class="panel-heading span5">
+			    					<p class="unselectable">@serie.getNome()</p>			    					
+			    			</div>
+			    				<ul class="lista list-group">			    				
+			    					@for(temporada <- serie.getTemporadas()){
+			    						<li style="background-color: #9FF781;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    					}
+			    				</ul>
+		    				}
+		    			}
+    				</div>
+    			</div>
+    			<div class="col-sm-3" style="left: 40%">
+    				<div class="panel panel-default">
+		    			<h1 class="panel-title" style="font-size: xx-large;">Acompanhando</h1>
+		    			@for(serie <- series){
+		    				@if(serie.isAcompanhada()){
+			    				<div id="showHide" class="panel-heading span5">
+			    					<span class="unselectable">@serie.getNome()</span>
+			    				</div>
+			    				<ul class="lista list-group">
+			    					@for(temporada <- serie.getTemporadas()){
+			    						<li style="background-color: #9FF781;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    					}
+			    				</ul>
+		    				}
+		    			}
+    				</div>
+    			</div>
+    		</div>
+    		<div class="col-sm-5">
+    			
+    		</div>
+    	</div>    
+   	</body>
+</html>

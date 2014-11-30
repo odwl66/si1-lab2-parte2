@@ -63,6 +63,7 @@ public class Temporada {
 	}
 	public void addEpisodio(Episodio episodio) {
 		this.episodios.add(episodio);
+		checarSeAssistida();
 	}
 	public int getAssistida() {
 		return assistida;
@@ -80,7 +81,7 @@ public class Temporada {
 		}
 		if (contador==episodios.size())
 			setAssistida(1);
-		else if (contador>=0)
+		else if (contador>0)
 			setAssistida(0);
 		else
 			setAssistida(-1);

@@ -20,7 +20,10 @@ public class SeriesTest extends AbstractTest{
 	Temporada temp1 = new Temporada(1, serie1);
 	Temporada temp2 = new Temporada(1, serie2);
 	Episodio epi1 = new Episodio("Volcano", temp1, 3);
-	Episodio epi2 = new Episodio("Death has a Shadow", temp2, 1);
+	Episodio epi2 = new Episodio("Damien",temp1,10);	
+	Episodio epi3 = new Episodio("Death",temp1,6);
+	Episodio epi4 = new Episodio("Death has a Shadow", temp2, 1);
+	
 	GenericDAO dao = new GenericDAO();
 	List<Serie> series;
 	
@@ -88,10 +91,21 @@ public class SeriesTest extends AbstractTest{
 		series = dao.findAllByClass(Serie.class);
 		assertThat(series.get(0).getTemporadas().get(0).getEpisodios().get(0).isAssistido()).isTrue();
 	}
-	//testa a funcionalidade que exige que se saiba se algum episodio
-	//de uma temporada foi assistido.
+	//testa a funcionalidade que exige que se saiba se nenhum, algum ou todos
+	//os episodios de uma temporada foram assistidos.
 	@Test
 	public void deveAtualizarEstadoDeTemporada() {
-		//TODO
+		serie1.addTemporada(temp1);
+		temp1.addEpisodio(epi1);
+		temp1.addEpisodio(epi3);
+		dao.persist(serie1);
+		series = dao.findAllByClass(Serie.class);
+		assertThat(series.get(0).getTemporadas().get(0).getAssistida()==-1).isTrue();
+		epi1.setAssistido(true);
+		assertThat(series.get(0).getTemporadas().get(0).getAssistida()==0).isTrue();
+		epi3.setAssistido(true);
+		assertThat(series.get(0).getTemporadas().get(0).getAssistida()==1).isTrue();
+		temp1.addEpisodio(epi2);
+		assertThat(series.get(0).getTemporadas().get(0).getAssistida()==0).isTrue();
 	}
 }

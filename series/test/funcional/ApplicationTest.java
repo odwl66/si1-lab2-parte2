@@ -1,25 +1,18 @@
 package funcional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import static org.fest.assertions.Assertions.assertThat;
+import static play.test.Helpers.contentAsString;
+import static play.test.Helpers.contentType;
+
 import java.util.List;
-import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import org.junit.*;
+import models.Serie;
+import models.dao.GenericDAO;
 
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
+import org.junit.Test;
+
+import base.AbstractTest;
 import play.twirl.api.Content;
-
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
 
 
 /**
@@ -28,8 +21,8 @@ import static org.fest.assertions.Assertions.*;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationTest {
-
+public class ApplicationTest extends AbstractTest{
+	GenericDAO dao = new GenericDAO();
     @Test
     public void simpleCheck() {
         int a = 1 + 1;
@@ -38,9 +31,10 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
+    	List<Serie> series = dao.findAllByClass(Serie.class);
+        Content html = views.html.index.render(series);
         assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Your new application is ready.");
+        assertThat(contentAsString(html)).contains("Sistema de acompanhamento de seriados, desenhos e afins.");
     }
 
 
