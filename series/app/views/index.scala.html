@@ -33,7 +33,7 @@
 			    			</div>
 			    				<ul class="lista list-group">			    				
 			    					@for(temporada <- serie.getTemporadas()){
-			    						<li style="background-color: #9FF781;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    						<li style="background-color: gray;" class="list-group-item">Temporada @temporada.getNumero</li>
 			    					}
 			    				</ul>
 		    				}
@@ -50,7 +50,20 @@
 			    				</div>
 			    				<ul class="lista list-group">
 			    					@for(temporada <- serie.getTemporadas()){
-			    						<li style="background-color: #9FF781;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    						@if(temporada.getAssistida().equals(-1)){
+			    							<li style="background-color: gray;" class="list-group-item span5">Temporada @temporada.getNumero</li>
+			    						}else{
+			    							@if(temporada.getAssistida().equals(0)){
+			    							<li style="background-color: #CCFF99;" class="list-group-item span5">Temporada @temporada.getNumero</li>
+			    							}else{
+			    								<li style="background-color: #33CC33;" class="list-group-item span5">Temporada @temporada.getNumero</li>
+			    							}
+			    						}
+			    						<ul>
+			    							@for(episodio <- temporada.getEpisodios()){
+			    								
+			    							}
+			    						</ul>
 			    					}
 			    				</ul>
 		    				}
