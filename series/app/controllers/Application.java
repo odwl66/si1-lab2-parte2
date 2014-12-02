@@ -19,7 +19,7 @@ public class Application extends Controller {
 	
 	@Transactional
     public static Result index() {
-		/*Serie serie1 = new Serie("South Park");
+		Serie serie1 = new Serie("South Park");
 		Serie serie2 = new Serie("Emin");
 		Temporada temp1 = new Temporada(1, serie1);
 		Temporada temp2 = new Temporada(2, serie1);
@@ -36,7 +36,7 @@ public class Application extends Controller {
 		serie1.addTemporada(temp2);
 		serie2.addTemporada(temp3);
 		dao.persist(serie1);
-		dao.persist(serie2);*/
+		dao.persist(serie2);
     	List<Serie> series = dao.findAllByClass(Serie.class);
         return ok(index.render(series));
     }

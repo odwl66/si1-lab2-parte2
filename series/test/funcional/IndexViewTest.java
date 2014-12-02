@@ -17,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import base.AbstractTest;
 import play.GlobalSettings;
 import play.db.jpa.JPA;
 import play.db.jpa.JPAPlugin;
@@ -26,7 +27,7 @@ import play.twirl.api.Html;
 import scala.Option;
 import views.html.index;
 
-public class IndexViewTest {
+public class IndexViewTest extends AbstractTest{
 	GenericDAO dao = new GenericDAO();
 	Serie serie1 = new Serie("South Park");
 	Serie serie2 = new Serie("Family Guy");
@@ -37,17 +38,6 @@ public class IndexViewTest {
 	Episodio epi3 = new Episodio("Death",temp1,6);
 	Episodio epi4 = new Episodio("Death has a Shadow", temp2, 1);
 	List<Serie> series;
-    public EntityManager em;
-    
-    @Before
-    public void setUp() {
-        FakeApplication app = Helpers.fakeApplication(new GlobalSettings());
-        Helpers.start(app);
-        Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
-        em = jpaPlugin.get().em("default");
-        JPA.bindForCurrentThread(em);
-        em.getTransaction().begin();
-    }
 	
 	@Test
 	public void deveAparecerSerieCadastrada() {
@@ -59,11 +49,4 @@ public class IndexViewTest {
 		assertThat(contentType(html)).isEqualTo("text/html");
 		assertThat(contentAsString(html)).contains("South Park");
 	}
-	
-	@After
-    public void tearDown() {
-        em.getTransaction().commit();
-        JPA.bindForCurrentThread(null);
-        em.close();
-    }
 }
