@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import base.AbstractTest;
 import play.GlobalSettings;
+import play.Logger;
 import play.db.jpa.JPA;
 import play.db.jpa.JPAPlugin;
 import play.test.FakeApplication;
@@ -48,5 +49,12 @@ public class IndexViewTest extends AbstractTest{
 		Html html = index.render(series);
 		assertThat(contentType(html)).isEqualTo("text/html");
 		assertThat(contentAsString(html)).contains("South Park");
+	}
+	//apenas checando o funcionamento do dao
+	@Test
+	public void testaDAO() {
+		dao.persist(serie1);
+		series = dao.findByAttributeName("Serie", "nome", "South Park");
+		Logger.debug(series.toString());
 	}
 }
