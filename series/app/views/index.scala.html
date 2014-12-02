@@ -28,10 +28,10 @@
 					            	<button type="submit" class="close" id="acompanharSerie"><span aria-hidden="true">&#10003;</span>
 					            	<span class="sr-only">Acompanhar serie</span></button>
 					        	</form>
-		    				<div id="showHide" class="panel-heading span5">
+		    				<div id="showHide" class="panel-heading span5 episodio">
 			    					<p class="unselectable">@serie.getNome()</p>			    					
 			    			</div>
-			    				<ul class="lista list-group">			    				
+			    				<ul class="lista list-group episodio">			    				
 			    					@for(temporada <- serie.getTemporadas()){
 			    						<li style="background-color: gray;" class="list-group-item">Temporada @temporada.getNumero</li>
 			    					}
@@ -50,20 +50,31 @@
 			    				</div>
 			    				<ul class="lista list-group">
 			    					@for(temporada <- serie.getTemporadas()){
+			    					<div class="span5 episodio">
 			    						@if(temporada.getAssistida().equals(-1)){
-			    							<li style="background-color: gray;" class="list-group-item span5">Temporada @temporada.getNumero</li>
+			    							<li style="background-color: gray;" class="list-group-item">Temporada @temporada.getNumero</li>
 			    						}else{
 			    							@if(temporada.getAssistida().equals(0)){
-			    							<li style="background-color: #CCFF99;" class="list-group-item span5">Temporada @temporada.getNumero</li>
+			    							<li style="background-color: yellow;" class="list-group-item">Temporada @temporada.getNumero</li>
 			    							}else{
-			    								<li style="background-color: #33CC33;" class="list-group-item span5">Temporada @temporada.getNumero</li>
+			    								<li style="background-color: #33CC33;" class="list-group-item">Temporada @temporada.getNumero</li>
 			    							}
 			    						}
-			    						<ul>
-			    							@for(episodio <- temporada.getEpisodios()){
-			    								
-			    							}
-			    						</ul>
+			    						</div>
+				    						<ul class="lista list-group episodio">
+				    							@for(episodio <- temporada.getEpisodios()){
+				    								@if(episodio.isAssistido()){				    									
+				    									<li style="background-color: #33CC33;" class="list-group-item">@episodio.getNome</li>
+				    								}else{<li style="background-color: gray;" class="list-group-item">
+				    									<form method="post" action="@routes.Application.assistirAEpisodio()">    							
+			    											<input type="hidden" name="id" value="@episodio.getId()">
+					            							<button type="submit" class="close" id="assistirAEpisodio"><span aria-hidden="true">&#10003;</span>
+					            							<span class="sr-only">Assistir a episodio</span></button>
+					        							</form>
+				    									@episodio.getNome</li>
+				    								}
+				    							}
+				    						</ul>
 			    					}
 			    				</ul>
 		    				}

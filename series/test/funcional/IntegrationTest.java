@@ -1,7 +1,6 @@
 package funcional;
 import org.junit.*;
 
-import base.AbstractTest;
 import play.mvc.*;
 import play.test.*;
 import play.libs.F.*;
