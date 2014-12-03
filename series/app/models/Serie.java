@@ -59,4 +59,14 @@ public class Serie {
 	public void setAssistida(boolean acompanhando) {
 		this.acompanhando = acompanhando;
 	}
+	
+	public int getTemporadasTotal() {
+		return temporadas.size();
+	}
+	
+	public Temporada getUltimaTemporada() throws Exception{
+		if (getTemporadasTotal()==0)
+			throw new Exception("Lista de Temporadas vazia! Nome da serie: "+this.getNome());
+		return temporadas.get(temporadas.size()-1);
+	}
 }

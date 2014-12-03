@@ -2,9 +2,6 @@ package base;
 
 import javax.persistence.EntityManager;
 
-import models.Serie;
-import models.dao.GenericDAO;
-
 import org.junit.After;
 import org.junit.Before;
 
@@ -33,5 +30,5 @@ public abstract class AbstractTest {
         em.getTransaction().commit();
         JPA.bindForCurrentThread(null);
         em.close();
-    }    
+    }
 }

@@ -55,6 +55,6 @@ public class IndexViewTest extends AbstractTest{
 	public void testaDAO() {
 		dao.persist(serie1);
 		series = dao.findByAttributeName("Serie", "nome", "South Park");
-		Logger.debug(series.toString());
+		Logger.debug("Tamanho: "+series.size());
 	}
 }

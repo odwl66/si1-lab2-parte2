@@ -18,25 +18,7 @@ public class Application extends Controller {
 	private static Form<Serie> serieForm = Form.form(Serie.class);
 	
 	@Transactional
-    public static Result index() {
-		Serie serie1 = new Serie("South Park");
-		Serie serie2 = new Serie("Emin");
-		Temporada temp1 = new Temporada(1, serie1);
-		Temporada temp2 = new Temporada(2, serie1);
-		Temporada temp3 = new Temporada(1, serie2);
-		Episodio epi1 = new Episodio("The Death", temp1, 1);
-		Episodio epi2 = new Episodio("Silent", temp2, 2);
-		Episodio epi3 = new Episodio("Boom", temp3, 1);
-		Episodio epi4 = new Episodio("Boom", temp1, 1);
-		temp1.addEpisodio(epi1);
-		temp1.addEpisodio(epi4);
-		temp2.addEpisodio(epi2);
-		temp3.addEpisodio(epi3);
-		serie1.addTemporada(temp1);
-		serie1.addTemporada(temp2);
-		serie2.addTemporada(temp3);
-		dao.persist(serie1);
-		dao.persist(serie2);
+    public static Result index() {		
     	List<Serie> series = dao.findAllByClass(Serie.class);
         return ok(index.render(series));
     }
