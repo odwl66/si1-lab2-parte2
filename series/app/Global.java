@@ -48,9 +48,30 @@ public class Global extends GlobalSettings {
 		try {
 	
 			br = new BufferedReader(new FileReader(csvFile));
+			Serie serie = new Serie(info[0]);
+			Temporada temporada;
+			Episodio episodio;
 			
 			while ((line = br.readLine()) != null) {
-				
+				//Falta tratar o caso em que a coluna de nome do epi e vazio
+				if (serie.getNome().equals(info[0])){
+					if (serie.getUltimaTemporada().getNumero==info[1]){
+						episodio = new Episodio(info[3], serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+						serie.getUltimaTemporada.addEpisodio(episodio);
+					} else{
+						temporada = new Temporada(Integer.parseInt(info[1],serie));
+						episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
+						temporada.addEpisodio(episodio);
+						serie.addTemporada(temporada);
+					}
+				} else{
+					dao.persist(serie);
+					serie = new Serie(info[0]);
+					temporada = new Temporada(Integer.parseInt(info[1],serie));
+					episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
+					temporada.addEpisodio(episodio);
+					serie.addTemporada(temporada);
+				}
 				String[] info = line.split(cvsSplitBy);
 				Serie serie = new Serie(info[0]);
 				Temporada temporada = new Temporada(Integer.parseInt(info[1]), serie);
