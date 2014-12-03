@@ -48,66 +48,49 @@ public class Global extends GlobalSettings {
 		try {
 	
 			br = new BufferedReader(new FileReader(csvFile));
-			Serie serie = new Serie(info[0]);
-			Temporada temporada;
-			Episodio episodio;
+			String[] info = line.split(cvsSplitBy);
+			Serie serie = new Serie("South Park");
+			Temporada temporada =  new Temporada(1, serie);
+			Episodio episodio = new Episodio("Cartman Gets an Anal Probe", temporada, 1);
+			temporada.addEpisodio(episodio);
+			serie.addTemporada(temporada);
+			line = br.readLine();
 			
 			while ((line = br.readLine()) != null) {
+				info = line.split(cvsSplitBy);
 				//Falta tratar o caso em que a coluna de nome do epi e vazio
 				if (serie.getNome().equals(info[0])){
-					if (serie.getUltimaTemporada().getNumero==info[1]){
-						episodio = new Episodio(info[3], serie.getUltimaTemporada(),Integer.parseInt(info[2]));
-						serie.getUltimaTemporada.addEpisodio(episodio);
+					if (serie.getTemporadasTotal()!=0 && serie.getUltimaTemporada().getNumero()==Integer.parseInt(info[1])) {
+						if (info.length>=4)
+							episodio = new Episodio(info[3], serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+						else
+							episodio = new Episodio("", serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+						serie.getUltimaTemporada().addEpisodio(episodio);
 					} else{
-						temporada = new Temporada(Integer.parseInt(info[1],serie));
-						episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
+						temporada = new Temporada(Integer.parseInt(info[1]),serie);
+						if (info.length>=4)
+							episodio = new Episodio(info[3], serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+						else
+							episodio = new Episodio("", serie.getUltimaTemporada(),Integer.parseInt(info[2]));
 						temporada.addEpisodio(episodio);
 						serie.addTemporada(temporada);
 					}
 				} else{
 					dao.persist(serie);
 					serie = new Serie(info[0]);
-					temporada = new Temporada(Integer.parseInt(info[1],serie));
-					episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
+					temporada = new Temporada(Integer.parseInt(info[1]),serie);
+					if (info.length>=4)
+						episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
+					else
+						episodio = new Episodio("", temporada,Integer.parseInt(info[2]));
 					temporada.addEpisodio(episodio);
 					serie.addTemporada(temporada);
-				}
-				String[] info = line.split(cvsSplitBy);
-				Serie serie = new Serie(info[0]);
-				Temporada temporada = new Temporada(Integer.parseInt(info[1]), serie);
-				Episodio episodio;
-				if (info.length==4){
-					episodio = new Episodio(info[3], temporada, Integer.parseInt(info[2]));
-				}else {
-					episodio = new Episodio("", temporada, Integer.parseInt(info[2]));
-				}
-				
-				
-				if (dao.findByAttributeName("Serie", "nome", info[0]).size()==0){
-					temporada.addEpisodio(episodio);
-					serie.addTemporada(temporada);
-					dao.persist(serie);
-					Logger.debug("Serie adicionada! Nome: "+serie.getNome());
-					dao.merge(serie);
-				}else {
-					serie = (Serie) dao.findByAttributeName("Serie", "nome", info[0]).get(0);
-					temporada = new Temporada(Integer.parseInt(info[1]), serie);
-					if (info.length==4){
-						episodio = new Episodio(info[3], temporada, Integer.parseInt(info[2]));
-					}else {
-						episodio = new Episodio("", temporada, Integer.parseInt(info[2]));
-					}
-					//se a ultima temporada adicionada a serie nao for a da linha atual
-					if (serie.getUltimaTemporada().getNumero()!=Integer.parseInt(info[1])) {
-						temporada.addEpisodio(episodio);
-						serie.addTemporada(temporada);
-					}else{
-						serie.getUltimaTemporada().addEpisodio(episodio);
-					}
 				}
 			}
+		}
+								
 	
-		} catch (FileNotFoundException e) {
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
