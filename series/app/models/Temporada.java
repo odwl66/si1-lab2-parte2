@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.Logger;
+
 @Entity(name="Temporada")
 public class Temporada {
 	@Id
@@ -74,10 +76,10 @@ public class Temporada {
 	}
 	public void checarSeAssistida() {
 		int contador = 0;
-		for (Episodio episodio : episodios) {
-			if (episodio.isAssistido()){
+		for (int i = 0; i < episodios.size(); i++) {
+			if (episodios.get(i).isAssistido()){
 				contador+=1;
-			}				
+			}
 		}
 		if (contador==episodios.size())
 			setAssistida(1);
@@ -85,5 +87,6 @@ public class Temporada {
 			setAssistida(0);
 		else
 			setAssistida(-1);
+		Logger.debug("Assistida? "+assistida);
 	}
 }

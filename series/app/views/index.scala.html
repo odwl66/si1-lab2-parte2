@@ -18,7 +18,7 @@
     			<h1 style="text-align: center">Sistema de acompanhamento de seriados, desenhos e afins.</h1>
     		</div>
     		<div class="row" style="text-align: center;">
-    			<div class="col-sm-3" style="left: 10%;">
+    			<div class="col-md-3" style="left: 10%;">
     				<div class="panel panel-default">
 		    			<h1 class="panel-title" style="font-size: xx-large;">Séries</h1>
 		    			@for(serie <- series){
@@ -40,11 +40,13 @@
 		    			}
     				</div>
     			</div>
-    			<div class="col-sm-3" style="left: 40%">
+    			<div class="col-md-3" style="left: 40%">
     				<div class="panel panel-default">
-		    			<h1 class="panel-title" style="font-size: xx-large;">Acompanhando</h1>
+		    			<h1 class="panel-title" style="font-size: xx-large;">Acompanhando</h1>		    			
 		    			@for(serie <- series){
-		    				@if(serie.isAcompanhada()){
+		    				
+		    				@if(serie.isAcompanhada()){		    							    					
+		    						<li style="font-style: oblique;" class="list-group-item list-group-item-danger">Proximo episódio a assistir: @serie.getProximoEpisodio().getNome()</li>
 			    				<div id="showHide" class="panel-heading span5">
 			    					<span class="unselectable">@serie.getNome()</span>
 			    				</div>
@@ -52,39 +54,38 @@
 			    					@for(temporada <- serie.getTemporadas()){
 			    					<div class="span5 episodio">
 			    						@if(temporada.getAssistida().equals(-1)){
-			    							<li style="background-color: gray;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    							<li style="font-style: oblique;" class="list-group-item list-group-item-danger">Temporada @temporada.getNumero</li>
 			    						}else{
 			    							@if(temporada.getAssistida().equals(0)){
-			    							<li style="background-color: yellow;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    							<li style="font-style: oblique;" class="list-group-item list-group-item-warning">Temporada @temporada.getNumero</li>
 			    							}else{
-			    								<li style="background-color: #33CC33;" class="list-group-item">Temporada @temporada.getNumero</li>
+			    								<li style="font-style: oblique;" class="list-group-item list-group-item-info">Temporada @temporada.getNumero</li>
 			    							}
 			    						}
 			    						</div>
 				    						<ul class="lista list-group episodio">
 				    							@for(episodio <- temporada.getEpisodios()){
 				    								@if(episodio.isAssistido()){				    									
-				    									<li style="background-color: #33CC33;" class="list-group-item">@episodio.getNome</li>
-				    								}else{<li style="background-color: gray;" class="list-group-item">
+				    									<li class="list-group-item list-group-item-info">@episodio.getNome</li>
+				    								}else{<li class="list-group-item list-group-item-danger">
 				    									<form method="post" action="@routes.Application.assistirAEpisodio()">    							
 			    											<input type="hidden" name="id" value="@episodio.getId()">
 					            							<button type="submit" class="close" id="assistirAEpisodio"><span aria-hidden="true">&#10003;</span>
-					            							<span class="sr-only">Assistir a episodio</span></button>
+					            							<span class="sr-only">Assistir a episódio</span></button>
 					        							</form>
 				    									@episodio.getNome</li>
 				    								}
 				    							}
 				    						</ul>
+				    						<br>
 			    					}
 			    				</ul>
+			    				<br>
 		    				}
 		    			}
     				</div>
     			</div>
-    		</div>
-    		<div class="col-sm-5">
-    			
-    		</div>
+    		</div>    		
     	</div>    
    	</body>
 </html>

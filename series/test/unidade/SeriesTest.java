@@ -12,9 +12,19 @@ import models.dao.GenericDAO;
 
 import org.junit.Test;
 
-import base.AbstractTest;
+import javax.persistence.EntityManager;
 
-public class SeriesTest extends AbstractTest{
+import org.junit.After;
+import org.junit.Before;
+
+import play.GlobalSettings;
+import play.db.jpa.JPA;
+import play.db.jpa.JPAPlugin;
+import play.test.FakeApplication;
+import play.test.Helpers;
+import scala.Option;
+
+public class SeriesTest {
 	Serie serie1 = new Serie("South Park");
 	Serie serie2 = new Serie("Family Guy");
 	Temporada temp1 = new Temporada(1, serie1);
@@ -27,6 +37,17 @@ public class SeriesTest extends AbstractTest{
 	GenericDAO dao = new GenericDAO();
 	List<Serie> series;
 	
+	public EntityManager em;
+    
+    @Before
+    public void setUp() {
+        FakeApplication app = Helpers.fakeApplication(new GlobalSettings());
+        Helpers.start(app);
+        Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
+        em = jpaPlugin.get().em("default");
+        JPA.bindForCurrentThread(em);
+        em.getTransaction().begin();
+    }
 	@Test
 	public void deveIniciarSemSeries() {
 		series = dao.findAllByClass(Serie.class);
@@ -108,4 +129,11 @@ public class SeriesTest extends AbstractTest{
 		temp1.addEpisodio(epi2);
 		assertThat(series.get(0).getTemporadas().get(0).getAssistida()==0).isTrue();
 	}
+	
+	@After
+    public void tearDown() {
+        em.getTransaction().commit();
+        JPA.bindForCurrentThread(null);
+        em.close();
+    }
 }

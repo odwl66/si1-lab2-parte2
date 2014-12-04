@@ -6,8 +6,6 @@ import static play.test.Helpers.contentType;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import models.Episodio;
 import models.Serie;
 import models.Temporada;
@@ -17,7 +15,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import base.AbstractTest;
 import play.GlobalSettings;
 import play.Logger;
 import play.db.jpa.JPA;
@@ -27,8 +24,11 @@ import play.test.Helpers;
 import play.twirl.api.Html;
 import scala.Option;
 import views.html.index;
+import javax.persistence.EntityManager;
 
-public class IndexViewTest extends AbstractTest{
+import play.GlobalSettings;
+
+public class IndexViewTest {
 	GenericDAO dao = new GenericDAO();
 	Serie serie1 = new Serie("South Park");
 	Serie serie2 = new Serie("Family Guy");
@@ -39,6 +39,17 @@ public class IndexViewTest extends AbstractTest{
 	Episodio epi3 = new Episodio("Death",temp1,6);
 	Episodio epi4 = new Episodio("Death has a Shadow", temp2, 1);
 	List<Serie> series;
+    public EntityManager em;
+    
+    @Before
+    public void setUp() {
+        FakeApplication app = Helpers.fakeApplication(new GlobalSettings());
+        Helpers.start(app);
+        Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
+        em = jpaPlugin.get().em("default");
+        JPA.bindForCurrentThread(em);
+        em.getTransaction().begin();
+    }
 	
 	@Test
 	public void deveAparecerSerieCadastrada() {
@@ -50,11 +61,11 @@ public class IndexViewTest extends AbstractTest{
 		assertThat(contentType(html)).isEqualTo("text/html");
 		assertThat(contentAsString(html)).contains("South Park");
 	}
-	//apenas checando o funcionamento do dao
-	@Test
-	public void testaDAO() {
-		dao.persist(serie1);
-		series = dao.findByAttributeName("Serie", "nome", "South Park");
-		Logger.debug("Tamanho: "+series.size());
-	}
+		
+	@After
+    public void tearDown() {
+        em.getTransaction().commit();
+        JPA.bindForCurrentThread(null);
+        em.close();
+    }
 }

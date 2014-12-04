@@ -12,8 +12,17 @@ import models.dao.GenericDAO;
 import org.junit.Test;
 
 import play.twirl.api.Content;
-import base.AbstractTest;
+import javax.persistence.EntityManager;
 
+import org.junit.After;
+import org.junit.Before;
+
+import play.GlobalSettings;
+import play.db.jpa.JPA;
+import play.db.jpa.JPAPlugin;
+import play.test.FakeApplication;
+import play.test.Helpers;
+import scala.Option;
 
 /**
 *
@@ -21,9 +30,18 @@ import base.AbstractTest;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationTest extends AbstractTest{
+public class ApplicationTest {
 	GenericDAO dao = new GenericDAO();
-    
+    public EntityManager em;
+    @Before
+    public void setUp() {
+        FakeApplication app = Helpers.fakeApplication(new GlobalSettings());
+        Helpers.start(app);
+        Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
+        em = jpaPlugin.get().em("default");
+        JPA.bindForCurrentThread(em);
+        em.getTransaction().begin();
+    }
     @Test
     public void simpleCheck() {
         int a = 1 + 1;
@@ -36,5 +54,11 @@ public class ApplicationTest extends AbstractTest{
         Content html = views.html.index.render(series);
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Sistema de acompanhamento de seriados, desenhos e afins.");
-    }    
+    }
+    @After
+    public void tearDown() {
+        em.getTransaction().commit();
+        JPA.bindForCurrentThread(null);
+        em.close();
+    }
 }

@@ -64,9 +64,35 @@ public class Serie {
 		return temporadas.size();
 	}
 	
-	public Temporada getUltimaTemporada() throws Exception{
+	public Temporada getUltimaTemporada() throws Exception {
 		if (getTemporadasTotal()==0)
 			throw new Exception("Lista de Temporadas vazia! Nome da serie: "+this.getNome());
 		return temporadas.get(temporadas.size()-1);
+	}
+	
+	//pega o proximo episodio nao assistido imediatamente depois do ultimo assistido
+	public Episodio getProximoEpisodio() {
+		for (int i = this.getTemporadasTotal(); i > 0; i--) {
+			List<Episodio> temp = this.getTemporadas().get(i-1).getEpisodios();
+			for (int j = temp.size(); j >0; j--) {
+				//o primeiro episodio achado, de tras para frente
+				if (temp.get(j-1).isAssistido()){
+					//se ultimo episodio a que assisti foi o ultimo de uma temporada
+					if (j==temp.size()){
+						//se for o ultimo episodio da ultima temporada
+						if (i==this.getTemporadasTotal()){
+							return new Episodio("Último episódio da serie já assistido", new Temporada(0, this), 0);
+						}else{
+							//pegue o primeiro da outra temporada
+							return this.getTemporadas().get(i).getEpisodios().get(0);
+						}
+					}else{
+						//pegue o proximo episodio da temporada
+						return temp.get(j);
+					}
+				}
+			}			
+		}
+		return new Episodio("Nenhum episodio assistido", new Temporada(0, this), 0);
 	}
 }
