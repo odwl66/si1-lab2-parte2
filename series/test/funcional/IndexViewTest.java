@@ -61,6 +61,8 @@ public class IndexViewTest {
 		assertThat(contentType(html)).isEqualTo("text/html");
 		assertThat(contentAsString(html)).contains("South Park");
 	}
+	
+	//TODO adicionar testes de assistir a serie
 		
 	@After
     public void tearDown() {

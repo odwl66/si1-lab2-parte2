@@ -53,7 +53,7 @@ public class ApplicationTest {
     	List<Serie> series = dao.findAllByClass(Serie.class);
         Content html = views.html.index.render(series);
         assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Sistema de acompanhamento de seriados, desenhos e afins.");
+        assertThat(contentAsString(html)).contains("Sistema de acompanhamento de seriados.");
     }
     @After
     public void tearDown() {
