@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+
 import models.Episodio;
 import models.Serie;
 import models.Temporada;
@@ -7,11 +13,6 @@ import play.GlobalSettings;
 import play.Logger;
 import play.Play;
 import play.db.jpa.JPA;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class Global extends GlobalSettings {
 
@@ -35,6 +36,15 @@ public class Global extends GlobalSettings {
             @Override
             public void invoke() throws Throwable {
             	Logger.info("Aplicação finalizando...");
+            	
+
+            	List<Serie> series = dao.findAllByClass(Serie.class);
+            	
+            	for (Serie serie : series) {
+            		dao.removeById(Serie.class, serie.getId());
+            	}
+            	
+            	
             }});    	
     }
     

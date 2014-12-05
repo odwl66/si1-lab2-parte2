@@ -87,6 +87,5 @@ public class Temporada {
 			setAssistida(0);
 		else
 			setAssistida(-1);
-		Logger.debug("Assistida? "+assistida);
 	}
 }
