@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import play.Logger;
-
 @Entity(name="Temporada")
 public class Temporada {
 	@Id

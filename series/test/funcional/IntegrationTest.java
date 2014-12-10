@@ -19,7 +19,7 @@ public class IntegrationTest {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
                 browser.goTo("http://localhost:3333");
-                assertThat(browser.pageSource()).contains("Sistema de acompanhamento de seriados.");
+                assertThat(browser.pageSource()).contains("Sistema de acompanhamento de seriados");
             }
         });
     }

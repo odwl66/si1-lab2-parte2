@@ -55,6 +55,12 @@ public class Application extends Controller {
 			
 			episodio.setAssistido(true);
 			
+			Temporada temp = episodio.getTemporada();
+			
+			for (Episodio epi : temp.getEpisodios()) {
+				Logger.debug("Nome: " + epi.getNome());
+			}
+			
 			dao.merge(episodio);
 			dao.flush();
 			

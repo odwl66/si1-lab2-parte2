@@ -13,14 +13,23 @@
  		<script src="@routes.Assets.at("javascripts/jquery-extra.js")" rel="javascript" media="screen"></script>
     </head>
     <body>
-    	<div class="content"><br>
+    	<div class="container"><br>
     		<div class="jumbotron">
-    			<h1 style="text-align: center">Sistema de acompanhamento de seriados.</h1>
+    			<h1 >Sistema de acompanhamento de seriados</h1>
+    			<p>Acompanhe em que episódio você está em cada série a que assiste.</p>
     		</div>
+    		
+    		
+    			<div class="alert alert-success" role="alert" id="successPanel">
+				<button type="button" class="close" id="close"><span aria-hidden="true">&times;</span>
+				<span class="sr-only">Close</span></button>
+				<p>Clique no &#10003 para marcar uma série como sendo acompanhada</p>
+				</div>
+    		
     		<div class="row" style="text-align: center;">
     			<div class="col-md-3" style="left: 10%;">
-    				<div class="panel panel-default">
-		    			<h1 class="panel-title" style="font-size: xx-large;">Séries</h1>
+    				<div class="list-group">
+		    			<h1 class="list-group-item active" style="font-size: xx-large;">Séries</h1>
 		    			@for(serie <- series){
 		    				@if(!serie.isAcompanhada()){
 		    				<form method="post" action="@routes.Application.acompanharSerie()">    							
@@ -39,18 +48,20 @@
 		    				}
 		    			}
     				</div>
-    			</div>
+    				</div>
+    			
+    			
     			<div class="col-md-3" style="left: 40%">
-    				<div class="panel panel-default">
-		    			<h1 class="panel-title" style="font-size: xx-large;">Acompanhando</h1>		    			
+    				<div class="list-group">
+		    			<h1 class="list-group-item active" style="font-size: xx-large;">Acompanhando</h1>		    			
 		    			@for(serie <- series){
 		    				
 		    				@if(serie.isAcompanhada()){		    							    					
 		    						<li style="font-style: oblique;" class="list-group-item list-group-item-danger">Próximo episódio a assistir: @serie.getProximoEpisodio().getNome()</li>
-			    				<div id="showHide" class="panel-heading span5">
-			    					<span class="unselectable">@serie.getNome()</span>
+			    				<div id="showHide" class="panel-heading span5 episodio">
+			    					<p class="unselectable">@serie.getNome()</p>
 			    				</div>
-			    				<ul class="lista list-group">
+			    				<ul class="lista list-group episodio">
 			    					@for(temporada <- serie.getTemporadas()){
 			    					<div class="span5 episodio">
 			    						@if(temporada.getAssistida().equals(-1)){
@@ -77,15 +88,13 @@
 				    								}
 				    							}
 				    						</ul>
-				    						<br>
 			    					}
 			    				</ul>
-			    				<br>
 		    				}
 		    			}
     				</div>
-    			</div>
-    		</div>    		
-    	</div>    
+    			</div> 	
+    			</div>	
+    	</div>
    	</body>
 </html>

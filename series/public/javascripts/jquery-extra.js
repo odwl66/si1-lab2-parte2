@@ -9,4 +9,8 @@ $(document).ready(function(){
     $(this).toggleClass('up_arrow').toggleClass('down_arrow');
     	 $(this).next().slideToggle('slow')
 	 });
+	
+	$("#close").click(function(){
+		$("#successPanel").fadeOut("slow");
+		});
 });

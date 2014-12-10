@@ -78,11 +78,14 @@ public class Global extends GlobalSettings {
 						serie.getUltimaTemporada().addEpisodio(episodio);
 					} else{
 						temporada = new Temporada(Integer.parseInt(info[1]),serie);
+						
 						if (info.length>=4)
-							episodio = new Episodio(info[3], serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+							episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
 						else
-							episodio = new Episodio("", serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+							episodio = new Episodio("", temporada,Integer.parseInt(info[2]));
+						
 						temporada.addEpisodio(episodio);
+						
 						serie.addTemporada(temporada);
 					}
 				} else{
@@ -95,8 +98,11 @@ public class Global extends GlobalSettings {
 						episodio = new Episodio("", temporada,Integer.parseInt(info[2]));
 					temporada.addEpisodio(episodio);
 					serie.addTemporada(temporada);
+					
 				}
 			}
+			//adiciona ultima serie do CSV
+			dao.persist(serie);
 		}
 								
 	
