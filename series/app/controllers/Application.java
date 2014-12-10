@@ -53,13 +53,7 @@ public class Application extends Controller {
 			long id = Long.parseLong(filledForm.data().get("id"));
 			Episodio episodio = dao.findByEntityId(Episodio.class, id);
 			
-			episodio.setAssistido(true);
-			
-			Temporada temp = episodio.getTemporada();
-			
-			for (Episodio epi : temp.getEpisodios()) {
-				Logger.debug("Nome: " + epi.getNome());
-			}
+			episodio.setAssistido(true);			
 			
 			dao.merge(episodio);
 			dao.flush();
