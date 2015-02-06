@@ -32,7 +32,7 @@ public class Global extends GlobalSettings {
 						dao.flush();
 					}
 				});
-
+				t.start();
             }});
     }
     
