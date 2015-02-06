@@ -1,4 +1,4 @@
-web: target/universal/stage/bin/si1-lab3 
+web: target/universal/stage/bin/series 
 -Dhttp.port=${PORT} 
 -DapplyEvolutions.default=true 
 -Ddb.default.driver=org.postgresql.Driver 
