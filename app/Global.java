@@ -24,9 +24,15 @@ public class Global extends GlobalSettings {
 
         JPA.withTransaction(new play.libs.F.Callback0() {
             @Override
-            public void invoke() throws Throwable {            	
-            	popularBD();
-                dao.flush();                
+            public void invoke() throws Throwable {
+				Thread t = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						popularBD();
+						dao.flush();
+					}
+				});
+
             }});
     }
     
@@ -48,13 +54,13 @@ public class Global extends GlobalSettings {
             }});    	
     }
     
-	public void popularBD() throws Exception{
+	public void popularBD() {
 		 
 		String csvFile = Play.application().getFile("/conf/seriesFinalFile.csv").getAbsolutePath();
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
-	
+
 		try {
 	
 			br = new BufferedReader(new FileReader(csvFile));
@@ -106,10 +112,7 @@ public class Global extends GlobalSettings {
 		}
 								
 	
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		catch (Exception e) {
 		} finally {
 			if (br != null) {
 				try {
