@@ -50,7 +50,7 @@ public class Global extends GlobalSettings {
     
 	public void popularBD() throws Exception{
 		 
-		String csvFile = Play.application().getFile("/app/seriesFinalFile.csv").getAbsolutePath();
+		String csvFile = Play.application().getFile("/conf/seriesFinalFile.csv").getAbsolutePath();
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
