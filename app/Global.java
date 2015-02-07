@@ -12,7 +12,7 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.Play;
-import play.db.jpa.JPA;
+import play.db.jpa.JPA;	
 
 public class Global extends GlobalSettings {
 
@@ -25,14 +25,8 @@ public class Global extends GlobalSettings {
         JPA.withTransaction(new play.libs.F.Callback0() {
             @Override
             public void invoke() throws Throwable {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						popularBD();
-						dao.flush();
-					}
-				});
-				t.start();
+            	popularBD();
+                dao.flush();
             }});
     }
     
@@ -54,8 +48,8 @@ public class Global extends GlobalSettings {
             }});    	
     }
     
-	public void popularBD() {
-		 
+	public void popularBD() throws Exception{
+
 		String csvFile = Play.application().getFile("/conf/seriesFinalFile.csv").getAbsolutePath();
 		BufferedReader br = null;
 		String line = "";
@@ -112,7 +106,10 @@ public class Global extends GlobalSettings {
 		}
 								
 	
-		catch (Exception e) {
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		} finally {
 			if (br != null) {
 				try {
@@ -121,6 +118,6 @@ public class Global extends GlobalSettings {
 					e.printStackTrace();
 				}
 			}
-		}	
+		}
 	}
 }
