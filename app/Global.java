@@ -17,8 +17,12 @@ import play.db.jpa.JPA;
 public class Global extends GlobalSettings {
 
     private static GenericDAO dao = new GenericDAO();
+	private static final int NOMEDASERIE = 0;
+	private static final int NUMDATEMPORADA = 1;
+	private static final int NUMDOEPISODIO = 2;
+	private static final int NOMEDOEPISODIO = 3;
 
-    @Override
+	@Override
     public void onStart(Application app) {
         Logger.info("Aplicação inicializada...");
 
@@ -36,19 +40,16 @@ public class Global extends GlobalSettings {
             @Override
             public void invoke() throws Throwable {
             	Logger.info("Aplicação finalizando...");
-            	
 
             	List<Serie> series = dao.findAllByClass(Serie.class);
             	
             	for (Serie serie : series) {
             		dao.removeById(Serie.class, serie.getId());
             	}
-            	
-            	
             }});    	
     }
     
-	public void popularBD() throws Exception{
+	public void popularBD() {
 
 		String csvFile = Play.application().getFile("/conf/seriesFinalFile.csv").getAbsolutePath();
 		BufferedReader br = null;
@@ -69,33 +70,35 @@ public class Global extends GlobalSettings {
 			while ((line = br.readLine()) != null) {
 				info = line.split(cvsSplitBy);
 				//Falta tratar o caso em que a coluna de nome do epi e vazio
-				if (serie.getNome().equals(info[0])){
-					if (serie.getTemporadasTotal()!=0 && serie.getUltimaTemporada().getNumero()==Integer.parseInt(info[1])) {
-						if (info.length>=4)
-							episodio = new Episodio(info[3], serie.getUltimaTemporada(),Integer.parseInt(info[2]));
-						else
-							episodio = new Episodio("", serie.getUltimaTemporada(),Integer.parseInt(info[2]));
+				if (serie.getNome().equals(info[NOMEDASERIE])){
+					if (serie.getTemporadasTotal()!=0 && serie.getUltimaTemporada().getNumero()==Integer.parseInt(info[NUMDATEMPORADA])) {
+						if (episodioTemNome(info)) {
+							episodio = new Episodio(info[NOMEDOEPISODIO], serie.getUltimaTemporada(), Integer.parseInt(info[NUMDOEPISODIO]));
+						} else {
+							episodio = new Episodio("", serie.getUltimaTemporada(), Integer.parseInt(info[NUMDOEPISODIO]));
+						}
 						serie.getUltimaTemporada().addEpisodio(episodio);
 					} else{
-						temporada = new Temporada(Integer.parseInt(info[1]),serie);
+						temporada = new Temporada(Integer.parseInt(info[NUMDATEMPORADA]),serie);
 						
-						if (info.length>=4)
-							episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
-						else
-							episodio = new Episodio("", temporada,Integer.parseInt(info[2]));
-						
+						if (episodioTemNome(info)) {
+							episodio = new Episodio(info[NOMEDOEPISODIO], temporada, Integer.parseInt(info[NUMDOEPISODIO]));
+						} else {
+							episodio = new Episodio("", temporada, Integer.parseInt(info[NUMDOEPISODIO]));
+						}
 						temporada.addEpisodio(episodio);
 						
 						serie.addTemporada(temporada);
 					}
-				} else{
+				} else {
 					dao.persist(serie);
-					serie = new Serie(info[0]);
-					temporada = new Temporada(Integer.parseInt(info[1]),serie);
-					if (info.length>=4)
-						episodio = new Episodio(info[3], temporada,Integer.parseInt(info[2]));
-					else
-						episodio = new Episodio("", temporada,Integer.parseInt(info[2]));
+					serie = new Serie(info[NOMEDASERIE]);
+					temporada = new Temporada(Integer.parseInt(info[NUMDATEMPORADA]), serie);
+					if (episodioTemNome(info)) {
+						episodio = new Episodio(info[NOMEDOEPISODIO], temporada, Integer.parseInt(info[NUMDOEPISODIO]));
+					} else {
+						episodio = new Episodio("", temporada, Integer.parseInt(info[NUMDOEPISODIO]));
+					}
 					temporada.addEpisodio(episodio);
 					serie.addTemporada(temporada);
 					
@@ -106,9 +109,7 @@ public class Global extends GlobalSettings {
 		}
 								
 	
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (br != null) {
@@ -119,5 +120,9 @@ public class Global extends GlobalSettings {
 				}
 			}
 		}
+	}
+
+	private boolean episodioTemNome(String[] info){
+		return info.length >= 4;
 	}
 }
