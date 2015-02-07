@@ -12,7 +12,7 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.Play;
-import play.db.jpa.JPA;	
+import play.db.jpa.JPA;
 
 public class Global extends GlobalSettings {
 
