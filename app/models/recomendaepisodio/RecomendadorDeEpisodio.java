@@ -1,4 +1,4 @@
-package models.RecomendaEpisodio;
+package models.recomendaepisodio;
 
 import models.Episodio;
 import models.Serie;

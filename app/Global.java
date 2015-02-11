@@ -122,6 +122,6 @@ public class Global extends GlobalSettings {
 	}
 
 	private boolean episodioTemNome(String[] info){
-		return info.length >= 4;
+		return info.length > NOMEDOEPISODIO;
 	}
 }

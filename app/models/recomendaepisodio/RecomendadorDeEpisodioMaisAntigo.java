@@ -1,12 +1,10 @@
-package models.RecomendaEpisodio;
+package models.recomendaepisodio;
 
 import models.Episodio;
 import models.Serie;
 import models.Temporada;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * Created by orion on 07/02/15.

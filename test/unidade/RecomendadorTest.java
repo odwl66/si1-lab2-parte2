@@ -1,9 +1,9 @@
 package unidade;
 
 import models.Episodio;
-import models.RecomendaEpisodio.RecomendadorDeEpisodio;
-import models.RecomendaEpisodio.RecomendadorDeEpisodioMaisAntigo;
-import models.RecomendaEpisodio.RecomendadorDeEpisodioMaisRecente;
+import models.recomendaepisodio.RecomendadorDeEpisodio;
+import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigo;
+import models.recomendaepisodio.RecomendadorDeEpisodioMaisRecente;
 import models.Serie;
 import models.Temporada;
 import org.junit.Before;

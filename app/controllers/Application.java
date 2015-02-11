@@ -13,12 +13,12 @@ import play.mvc.Result;
 import views.html.index;
 
 public class Application extends Controller {
-	private static final GenericDAO dao = new GenericDAO();
+	private static final GenericDAO DAO = new GenericDAO();
 	private static Form<Serie> serieForm = Form.form(Serie.class);
 	
 	@Transactional
     public static Result index() {		
-    	List<Serie> series = dao.findAllByClass(Serie.class);
+    	List<Serie> series = DAO.findAllByClass(Serie.class);
         return ok(index.render(series));
     }
 	
@@ -26,15 +26,15 @@ public class Application extends Controller {
 	public static Result acompanharSerie() {
 		Form<Serie> filledForm = serieForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
-            List<Serie> result = dao.findAllByClass(Serie.class);
+            List<Serie> result = DAO.findAllByClass(Serie.class);
 			return badRequest(views.html.index.render(result));
 		} else {
 			long id = Long.parseLong(filledForm.data().get("id"));
-			Serie serie = dao.findByEntityId(Serie.class, id);			
+			Serie serie = DAO.findByEntityId(Serie.class, id);
 			serie.setAssistida(true);
             
-			dao.merge(serie);
-			dao.flush();
+			DAO.merge(serie);
+			DAO.flush();
 			
 			Logger.debug("Assistindo a serie: " + filledForm.data().toString() + " como " + serie.getNome() + " ID: "+serie.getId());
             
@@ -46,16 +46,16 @@ public class Application extends Controller {
 	public static Result assistirAEpisodio() {
 		Form<Serie> filledForm = serieForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
-            List<Serie> result = dao.findAllByClass(Serie.class);
+            List<Serie> result = DAO.findAllByClass(Serie.class);
 			return badRequest(views.html.index.render(result));
 		} else {
 			long id = Long.parseLong(filledForm.data().get("id"));
-			Episodio episodio = dao.findByEntityId(Episodio.class, id);
+			Episodio episodio = DAO.findByEntityId(Episodio.class, id);
 			
 			episodio.setAssistido(true);			
 			
-			dao.merge(episodio);
-			dao.flush();
+			DAO.merge(episodio);
+			DAO.flush();
 			
 			Logger.debug("Assistiu a episodio: " + filledForm.data().toString() + " como " + episodio.getNome() + " ID: "+episodio.getId());
             
@@ -67,17 +67,17 @@ public class Application extends Controller {
 	public static Result mudaRecomendacaoDeSerie() {
 		Form<Serie> filledForm = serieForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
-			List<Serie> result = dao.findAllByClass(Serie.class);
+			List<Serie> result = DAO.findAllByClass(Serie.class);
 			return badRequest(views.html.index.render(result));
 		} else {
 			long id = Long.parseLong(filledForm.data().get("id"));
-			Serie serie = dao.findByEntityId(Serie.class, id);
+			Serie serie = DAO.findByEntityId(Serie.class, id);
 			serie.setRecomendadorDeEpisodio(filledForm.data().get("recomendador"));
 
 			Logger.debug("Recomendou: " + filledForm.data().get("recomendador") + " na serie " + serie.getNome());
 
-			dao.merge(serie);
-			dao.flush();
+			DAO.merge(serie);
+			DAO.flush();
 
 			return redirect(routes.Application.index());
 		}

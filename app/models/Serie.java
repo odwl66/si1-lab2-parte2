@@ -1,10 +1,8 @@
 package models;
 
-import models.Episodio;
-import models.RecomendaEpisodio.RecomendadorDeEpisodio;
-import models.RecomendaEpisodio.RecomendadorDeEpisodioMaisAntigo;
-import models.RecomendaEpisodio.RecomendadorDeEpisodioMaisRecente;
-import models.Temporada;
+import models.recomendaepisodio.RecomendadorDeEpisodio;
+import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigo;
+import models.recomendaepisodio.RecomendadorDeEpisodioMaisRecente;
 
 import java.util.ArrayList;
 import java.util.List;
