@@ -20,10 +20,10 @@ public class Temporada {
 	@Column
 	private int numero;
 	@ManyToOne(cascade=CascadeType.ALL)
-	Serie serie;
+	private Serie serie;
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="EPI")
-	List<Episodio> episodios;
+	private List<Episodio> episodios;
 	/*-1: nenhum episodio assistido 
 	 * 0: ao menos um episodio assistido, mas nao todos
 	 1: todos os episodios da temporada assistidos*/
@@ -69,8 +69,9 @@ public class Temporada {
 		return assistida;
 	}
 	public void setAssistida(int assistida) {
-		if (assistida>=-1 && assistida<=1)
+		if (assistida>=-1 && assistida<=1) {
 			this.assistida = assistida;
+		}
 	}
 
 	public Episodio episodioMaisAntigoNaoAssistido(){
@@ -89,11 +90,14 @@ public class Temporada {
 				contador+=1;
 			}
 		}
-		if (contador==episodios.size())
+		if (contador==episodios.size()) {
 			setAssistida(1);
-		else if (contador>0)
+		}
+		else if (contador>0) {
 			setAssistida(0);
-		else
+		}
+		else {
 			setAssistida(-1);
+		}
 	}
 }

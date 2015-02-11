@@ -17,7 +17,7 @@ public class Episodio {
 	@Column
 	private int numero;
 	@ManyToOne(cascade=CascadeType.ALL)
-	Temporada temporada;
+	private Temporada temporada;
 	@Column
 	private boolean assistido;
 	

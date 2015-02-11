@@ -66,8 +66,9 @@ public class Serie {
 	}
 	
 	public Temporada getUltimaTemporada() throws Exception {
-		if (getTemporadasTotal()==0)
-			throw new Exception("Lista de Temporadas vazia! Nome da serie: "+this.getNome());
+		if (getTemporadasTotal() == 0) {
+			throw new Exception("Lista de Temporadas vazia! Nome da serie: " + this.getNome());
+		}
 		return temporadas.get(temporadas.size()-1);
 	}
 
