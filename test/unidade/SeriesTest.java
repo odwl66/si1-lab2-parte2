@@ -1,6 +1,5 @@
 package unidade;
 
-
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.List;

@@ -56,8 +56,20 @@
 		    			<h1 class="list-group-item active" style="font-size: xx-large;">Acompanhando</h1>		    			
 		    			@for(serie <- series){
 		    				
-		    				@if(serie.isAcompanhada()){		    							    					
-		    						<li style="font-style: oblique;" class="list-group-item list-group-item-danger">Próximo episódio a assistir: @serie.getProximoEpisodio().getNome()</li>
+		    				@if(serie.isAcompanhada()){
+		    					<div class="list-group-item list-group-item-danger">
+
+									<form method="post" action="@routes.Application.mudaRecomendacaoDeSerie()">
+										<li> Desejo ver o episódio:</li>
+										<input type="hidden" name="id" value="@serie.getId()">
+										em seguida do último que assisti<button type="submit" class="close" name="recomendador" value="recente"><span aria-hidden="true">&#10003;</span></button>
+										<br>
+										mais antigo que não assisti<button type="submit" class="close" name="recomendador" value="antigo"><span aria-hidden="true">&#10003;</span></button>
+									</form>
+									<br>
+									<li style="font-style: oblique;" >Próximo episódio a assistir: @serie.getProximoEpisodio().getNome()</li>
+		    					</div>
+
 			    				<div id="showHide" class="panel-heading span5 episodio">
 			    					<p class="unselectable">@serie.getNome()</p>
 			    				</div>

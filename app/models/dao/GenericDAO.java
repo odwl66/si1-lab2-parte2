@@ -2,10 +2,8 @@ package models.dao;
 
 import java.util.List;
 
-import javax.persistence.LockModeType;
 import javax.persistence.Query;
 
-import models.Serie;
 import play.db.jpa.JPA;
 
 /**

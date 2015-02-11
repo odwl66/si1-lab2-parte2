@@ -1,16 +1,15 @@
 package models;
 
+import models.Episodio;
+import models.RecomendaEpisodio.RecomendadorDeEpisodio;
+import models.RecomendaEpisodio.RecomendadorDeEpisodioMaisAntigo;
+import models.RecomendaEpisodio.RecomendadorDeEpisodioMaisRecente;
+import models.Temporada;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity(name="Serie")
 public class Serie {
@@ -24,14 +23,18 @@ public class Serie {
 	private List<Temporada> temporadas;
 	@Column
 	private boolean acompanhando;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="RECOMENDADOR")
+	private RecomendadorDeEpisodio recomendadorDeEpisodio;
 	
 	public Serie(){
-		this.temporadas = new ArrayList<Temporada>(); 
+		this.temporadas = new ArrayList<Temporada>();
 	}
 	
 	public Serie(String nome){
 		this();
 		this.nome=nome;
+		this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
 	}
 	
 	public Long getId() {
@@ -69,30 +72,22 @@ public class Serie {
 			throw new Exception("Lista de Temporadas vazia! Nome da serie: "+this.getNome());
 		return temporadas.get(temporadas.size()-1);
 	}
-	
-	//pega o proximo episodio nao assistido imediatamente depois do ultimo assistido
-	public Episodio getProximoEpisodio() {
-		for (int i = this.getTemporadasTotal(); i > 0; i--) {
-			List<Episodio> temp = this.getTemporadas().get(i-1).getEpisodios();
-			for (int j = temp.size(); j >0; j--) {
-				//o primeiro episodio achado, de tras para frente
-				if (temp.get(j-1).isAssistido()){
-					//se ultimo episodio a que assisti foi o ultimo de uma temporada
-					if (j==temp.size()){
-						//se for o ultimo episodio da ultima temporada
-						if (i==this.getTemporadasTotal()){
-							return new Episodio("Último episódio da serie já assistido", new Temporada(0, this), 0);
-						}else{
-							//pegue o primeiro da outra temporada
-							return this.getTemporadas().get(i).getEpisodios().get(0);
-						}
-					}else{
-						//pegue o proximo episodio da temporada
-						return temp.get(j);
-					}
-				}
-			}			
-		}
-		return new Episodio("Nenhum episodio assistido", new Temporada(0, this), 0);
+
+	public RecomendadorDeEpisodio getRecomendadorDeEpisodio(){
+		return recomendadorDeEpisodio;
 	}
+
+	public void setRecomendadorDeEpisodio(String recomendador){
+		if (recomendador.equals("recente")){
+			this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
+		} else {
+			this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+		}
+	}
+
+	public Episodio getProximoEpisodio(){
+		return recomendadorDeEpisodio.getProximoEpisodio(this);
+	}
+	
+
 }

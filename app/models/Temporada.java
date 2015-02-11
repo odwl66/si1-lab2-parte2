@@ -72,6 +72,16 @@ public class Temporada {
 		if (assistida>=-1 && assistida<=1)
 			this.assistida = assistida;
 	}
+
+	public Episodio episodioMaisAntigoNaoAssistido(){
+		for (Episodio episodio: episodios){
+			if(!episodio.isAssistido()){
+				return episodio;
+			}
+		}
+		return null;
+	}
+
 	public void checarSeAssistida() {
 		int contador = 0;
 		for (int i = 0; i < episodios.size(); i++) {

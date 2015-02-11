@@ -4,7 +4,6 @@ import java.util.List;
 
 import models.Episodio;
 import models.Serie;
-import models.Temporada;
 import models.dao.GenericDAO;
 import play.Logger;
 import play.data.Form;
@@ -60,6 +59,26 @@ public class Application extends Controller {
 			
 			Logger.debug("Assistiu a episodio: " + filledForm.data().toString() + " como " + episodio.getNome() + " ID: "+episodio.getId());
             
+			return redirect(routes.Application.index());
+		}
+	}
+
+	@Transactional
+	public static Result mudaRecomendacaoDeSerie() {
+		Form<Serie> filledForm = serieForm.bindFromRequest();
+		if (filledForm.hasErrors()) {
+			List<Serie> result = dao.findAllByClass(Serie.class);
+			return badRequest(views.html.index.render(result));
+		} else {
+			long id = Long.parseLong(filledForm.data().get("id"));
+			Serie serie = dao.findByEntityId(Serie.class, id);
+			serie.setRecomendadorDeEpisodio(filledForm.data().get("recomendador"));
+
+			Logger.debug("Recomendou: " + filledForm.data().get("recomendador") + " na serie " + serie.getNome());
+
+			dao.merge(serie);
+			dao.flush();
+
 			return redirect(routes.Application.index());
 		}
 	}

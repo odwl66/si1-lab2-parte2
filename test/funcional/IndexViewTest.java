@@ -6,9 +6,7 @@ import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.contentType;
 import static play.test.Helpers.fakeRequest;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import models.Episodio;
 import models.Serie;
@@ -20,10 +18,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import play.GlobalSettings;
-import play.Logger;
 import play.db.jpa.JPA;
 import play.db.jpa.JPAPlugin;
-import play.mvc.Result;
 import play.test.FakeApplication;
 import play.test.Helpers;
 import play.twirl.api.Html;
@@ -31,8 +27,6 @@ import scala.Option;
 import views.html.index;
 
 import javax.persistence.EntityManager;
-
-import play.GlobalSettings;
 
 public class IndexViewTest {
 	GenericDAO dao = new GenericDAO();
