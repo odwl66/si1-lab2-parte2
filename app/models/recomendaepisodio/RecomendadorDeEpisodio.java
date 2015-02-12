@@ -10,7 +10,7 @@ import javax.persistence.Id;
 /**
  * Created by orion on 07/02/15.
  */
-@Entity(name="Recomendador")
+@Entity
 public abstract class RecomendadorDeEpisodio {
     @Id
     @GeneratedValue

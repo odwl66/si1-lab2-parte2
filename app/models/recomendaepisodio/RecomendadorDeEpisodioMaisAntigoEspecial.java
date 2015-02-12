@@ -11,7 +11,7 @@ import java.util.List;
  * Created by orion on 12/02/15.
  */
 
-@Entity(name="AntigoEspecial")
+@Entity
 public class RecomendadorDeEpisodioMaisAntigoEspecial extends RecomendadorDeEpisodioMaisAntigo {
     public RecomendadorDeEpisodioMaisAntigoEspecial(){}
 

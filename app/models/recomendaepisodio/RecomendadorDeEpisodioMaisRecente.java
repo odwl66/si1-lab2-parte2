@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by orion on 07/02/15.
  */
-@Entity(name="Recente")
+@Entity
 public class RecomendadorDeEpisodioMaisRecente extends RecomendadorDeEpisodio {
     public RecomendadorDeEpisodioMaisRecente(){}
 

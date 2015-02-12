@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 /**
  * Created by orion on 07/02/15.
  */
-@Entity(name="Antigo")
+@Entity
 public class RecomendadorDeEpisodioMaisAntigo extends RecomendadorDeEpisodio {
     public RecomendadorDeEpisodioMaisAntigo(){}
 
