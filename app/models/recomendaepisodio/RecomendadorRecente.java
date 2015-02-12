@@ -11,8 +11,8 @@ import java.util.List;
  * Created by orion on 07/02/15.
  */
 @Entity
-public class RecomendadorDeEpisodioMaisRecente extends RecomendadorDeEpisodio {
-    public RecomendadorDeEpisodioMaisRecente(){}
+public class RecomendadorRecente extends RecomendadorDeEpisodio {
+    public RecomendadorRecente(){}
 
     @Override
     public Episodio getProximoEpisodio(Serie serie) {

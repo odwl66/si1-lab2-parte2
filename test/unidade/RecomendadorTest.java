@@ -2,9 +2,9 @@ package unidade;
 
 import models.Episodio;
 import models.recomendaepisodio.RecomendadorDeEpisodio;
-import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigo;
-import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigoEspecial;
-import models.recomendaepisodio.RecomendadorDeEpisodioMaisRecente;
+import models.recomendaepisodio.RecomendadorAntigo;
+import models.recomendaepisodio.RecomendadorAntigoEspecial;
+import models.recomendaepisodio.RecomendadorRecente;
 import models.Serie;
 import models.Temporada;
 import org.junit.Before;
@@ -48,7 +48,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoSemNenhumEpisodioAssistido(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+        recomendadorDeEpisodio = new RecomendadorAntigo();
         e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
 
         assertThat(e.getNome()).isEqualTo("Volcano");
@@ -56,7 +56,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoCom1EpisodioAssistido(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+        recomendadorDeEpisodio = new RecomendadorAntigo();
         epi1.setAssistido(true);
 
         e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
@@ -66,7 +66,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoCom1aTemporadaAssistida(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+        recomendadorDeEpisodio = new RecomendadorAntigo();
         epi1.setAssistido(true);
         epi2.setAssistido(true);
         epi3.setAssistido(true);
@@ -78,7 +78,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoCom1oe3oEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+        recomendadorDeEpisodio = new RecomendadorAntigo();
         epi1.setAssistido(true);
         epi3.setAssistido(true);
 
@@ -89,7 +89,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoComTodosEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+        recomendadorDeEpisodio = new RecomendadorAntigo();
         epi1.setAssistido(true);
         epi2.setAssistido(true);
         epi3.setAssistido(true);
@@ -108,7 +108,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialSemNenhumEpisodioAssistido(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
 
         assertThat(e.getNome()).isEqualTo("Volcano");
@@ -116,7 +116,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1EpisodioAssistido(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         epi1.setAssistido(true);
 
         e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
@@ -126,7 +126,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1aTemporadaAssistida(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         epi1.setAssistido(true);
         epi2.setAssistido(true);
         epi3.setAssistido(true);
@@ -138,7 +138,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1oe3oEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         epi1.setAssistido(true);
         epi3.setAssistido(true);
 
@@ -149,7 +149,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1o3oe4oEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         epi1.setAssistido(true);
         epi3.setAssistido(true);
         epi5.setAssistido(true);
@@ -161,7 +161,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom3EpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         epi1.setAssistido(true);
         epi3.setAssistido(true);
         epi5.setAssistido(true);
@@ -174,7 +174,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisAntigoEspecialComTodosEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
         epi1.setAssistido(true);
         epi2.setAssistido(true);
         epi3.setAssistido(true);
@@ -193,7 +193,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisRecenteSemNenhumEpisodioAssistido(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
+        recomendadorDeEpisodio = new RecomendadorRecente();
         e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
 
         assertThat(e.getNome()).isEqualTo("Nenhum episodio assistido");
@@ -201,7 +201,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisRecenteCom1EpisodioAssistido(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
+        recomendadorDeEpisodio = new RecomendadorRecente();
         epi1.setAssistido(true);
 
         e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
@@ -211,7 +211,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisRecenteCom1aTemporadaAssistida(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
+        recomendadorDeEpisodio = new RecomendadorRecente();
         epi1.setAssistido(true);
         epi2.setAssistido(true);
         epi3.setAssistido(true);
@@ -223,7 +223,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisRecenteCom1oe3oEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
+        recomendadorDeEpisodio = new RecomendadorRecente();
         epi1.setAssistido(true);
         epi3.setAssistido(true);
 
@@ -234,7 +234,7 @@ public class RecomendadorTest {
 
     @Test
     public void testaRecomendadorDeEpisodioMaisRecenteComTodosEpisodiosAssistidos(){
-        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
+        recomendadorDeEpisodio = new RecomendadorRecente();
         epi1.setAssistido(true);
         epi2.setAssistido(true);
         epi3.setAssistido(true);

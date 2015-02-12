@@ -12,8 +12,8 @@ import java.util.List;
  */
 
 @Entity
-public class RecomendadorDeEpisodioMaisAntigoEspecial extends RecomendadorDeEpisodioMaisAntigo {
-    public RecomendadorDeEpisodioMaisAntigoEspecial(){}
+public class RecomendadorAntigoEspecial extends RecomendadorAntigo {
+    public RecomendadorAntigoEspecial(){}
 
     @Override
     public Episodio getProximoEpisodio(Serie serie) {

@@ -10,8 +10,8 @@ import javax.persistence.Entity;
  * Created by orion on 07/02/15.
  */
 @Entity
-public class RecomendadorDeEpisodioMaisAntigo extends RecomendadorDeEpisodio {
-    public RecomendadorDeEpisodioMaisAntigo(){}
+public class RecomendadorAntigo extends RecomendadorDeEpisodio {
+    public RecomendadorAntigo(){}
 
     @Override
     public Episodio getProximoEpisodio(Serie serie) {
