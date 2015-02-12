@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -59,6 +60,7 @@ public class Temporada implements Comparable<Temporada> {
 		this.serie = serie;
 	}
 	public List<Episodio> getEpisodios() {
+		Collections.sort(episodios);
 		return episodios;
 	}
 	public void addEpisodio(Episodio episodio) {

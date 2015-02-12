@@ -6,6 +6,7 @@ import models.recomendaepisodio.RecomendadorAntigoEspecial;
 import models.recomendaepisodio.RecomendadorRecente;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.*;
@@ -49,6 +50,7 @@ public class Serie {
 		this.nome = nome;
 	}
 	public List<Temporada> getTemporadas() {
+		Collections.sort(temporadas);
 		return temporadas;
 	}
 	public void addTemporada(Temporada temporada) {
