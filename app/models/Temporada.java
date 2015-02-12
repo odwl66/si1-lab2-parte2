@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name="Temporada")
-public class Temporada {
+public class Temporada implements Comparable<Temporada> {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -99,5 +99,15 @@ public class Temporada {
 		else {
 			setAssistida(-1);
 		}
+	}
+
+	@Override
+	public int compareTo(Temporada temporada) {
+		if (this.getNumero()>temporada.getNumero()){
+			return 1;
+		} else if (this.getNumero()<temporada.getNumero()){
+			return -1;
+		}
+		return 0;
 	}
 }
