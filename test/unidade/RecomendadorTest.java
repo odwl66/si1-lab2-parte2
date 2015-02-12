@@ -3,6 +3,7 @@ package unidade;
 import models.Episodio;
 import models.recomendaepisodio.RecomendadorDeEpisodio;
 import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigo;
+import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigoEspecial;
 import models.recomendaepisodio.RecomendadorDeEpisodioMaisRecente;
 import models.Serie;
 import models.Temporada;
@@ -105,7 +106,86 @@ public class RecomendadorTest {
 
 
 
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialSemNenhumEpisodioAssistido(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
 
+        assertThat(e.getNome()).isEqualTo("Volcano");
+    }
+
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1EpisodioAssistido(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        epi1.setAssistido(true);
+
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
+
+        assertThat(e.getNome()).isEqualTo("Damien");
+    }
+
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1aTemporadaAssistida(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        epi1.setAssistido(true);
+        epi2.setAssistido(true);
+        epi3.setAssistido(true);
+
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
+
+        assertThat(e.getNome()).isEqualTo("Episodio 5");
+    }
+
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1oe3oEpisodiosAssistidos(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        epi1.setAssistido(true);
+        epi3.setAssistido(true);
+
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
+
+        assertThat(e.getNome()).isEqualTo("Damien");
+    }
+
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom1o3oe4oEpisodiosAssistidos(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        epi1.setAssistido(true);
+        epi3.setAssistido(true);
+        epi5.setAssistido(true);
+
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
+
+        assertThat(e.getNome()).isEqualTo("Damien");
+    }
+
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialCom3EpisodiosAssistidos(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        epi1.setAssistido(true);
+        epi3.setAssistido(true);
+        epi5.setAssistido(true);
+        epi6.setAssistido(true);
+
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
+
+        assertThat(e.getNome()).isEqualTo("Episodio 7");
+    }
+
+    @Test
+    public void testaRecomendadorDeEpisodioMaisAntigoEspecialComTodosEpisodiosAssistidos(){
+        recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+        epi1.setAssistido(true);
+        epi2.setAssistido(true);
+        epi3.setAssistido(true);
+        epi5.setAssistido(true);
+        epi6.setAssistido(true);
+        epi7.setAssistido(true);
+
+        e = recomendadorDeEpisodio.getProximoEpisodio(serie1);
+
+        assertThat(e.getNome()).isEqualTo("3 últimos episódios da série já assistidos!");
+    }
 
 
 
