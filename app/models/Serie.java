@@ -2,6 +2,7 @@ package models;
 
 import models.recomendaepisodio.RecomendadorDeEpisodio;
 import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigo;
+import models.recomendaepisodio.RecomendadorDeEpisodioMaisAntigoEspecial;
 import models.recomendaepisodio.RecomendadorDeEpisodioMaisRecente;
 
 import java.util.ArrayList;
@@ -77,16 +78,16 @@ public class Serie {
 	}
 
 	public void setRecomendadorDeEpisodio(String recomendador){
-		if (recomendador.equals("recente")){
-			this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
-		} else {
+		if (recomendador.equals("antigoEspecial")){
+			this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigoEspecial();
+		} else if (recomendador.equals("antigo")){
 			this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisAntigo();
+		} else {
+			this.recomendadorDeEpisodio = new RecomendadorDeEpisodioMaisRecente();
 		}
 	}
 
 	public Episodio getProximoEpisodio(){
 		return recomendadorDeEpisodio.getProximoEpisodio(this);
 	}
-	
-
 }
