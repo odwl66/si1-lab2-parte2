@@ -5,6 +5,10 @@ import java.util.List;
 import models.Episodio;
 import models.Serie;
 import models.dao.GenericDAO;
+import models.recomendaepisodio.RecomendadorAntigo;
+import models.recomendaepisodio.RecomendadorAntigoEspecial;
+import models.recomendaepisodio.RecomendadorDeEpisodio;
+import models.recomendaepisodio.RecomendadorRecente;
 import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -70,9 +74,21 @@ public class Application extends Controller {
 			List<Serie> result = DAO.findAllByClass(Serie.class);
 			return badRequest(views.html.index.render(result));
 		} else {
+			RecomendadorDeEpisodio recomendadorDeEpisodio;
+
 			long id = Long.parseLong(filledForm.data().get("id"));
+			String recomendador = filledForm.data().get("recomendador");
+
+			if (recomendador.equals("antigoEspecial")){
+				recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
+			} else if (recomendador.equals("antigo")){
+				recomendadorDeEpisodio = new RecomendadorAntigo();
+			} else {
+				recomendadorDeEpisodio = new RecomendadorRecente();
+			}
+
 			Serie serie = DAO.findByEntityId(Serie.class, id);
-			serie.setRecomendadorDeEpisodio(filledForm.data().get("recomendador"));
+			serie.setRecomendadorDeEpisodio(recomendadorDeEpisodio);
 
 			Logger.debug("Recomendou: " + filledForm.data().get("recomendador") + " na serie " + serie.getNome());
 

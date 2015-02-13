@@ -79,14 +79,8 @@ public class Serie {
 		return recomendadorDeEpisodio;
 	}
 
-	public void setRecomendadorDeEpisodio(String recomendador){
-		if (recomendador.equals("antigoEspecial")){
-			this.recomendadorDeEpisodio = new RecomendadorAntigoEspecial();
-		} else if (recomendador.equals("antigo")){
-			this.recomendadorDeEpisodio = new RecomendadorAntigo();
-		} else {
-			this.recomendadorDeEpisodio = new RecomendadorRecente();
-		}
+	public void setRecomendadorDeEpisodio(RecomendadorDeEpisodio recomendadorDeEpisodio){
+		this.recomendadorDeEpisodio = recomendadorDeEpisodio;
 	}
 
 	public Episodio getProximoEpisodio(){
