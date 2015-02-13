@@ -1,8 +1,6 @@
 package models;
 
 import models.recomendaepisodio.RecomendadorDeEpisodio;
-import models.recomendaepisodio.RecomendadorAntigo;
-import models.recomendaepisodio.RecomendadorAntigoEspecial;
 import models.recomendaepisodio.RecomendadorRecente;
 
 import java.util.ArrayList;
