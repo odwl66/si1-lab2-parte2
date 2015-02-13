@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Comparator;
 
 @Entity(name="Episodio")
 public class Episodio implements Comparable<Episodio>{

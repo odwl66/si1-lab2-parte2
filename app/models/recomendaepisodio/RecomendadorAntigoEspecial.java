@@ -13,11 +13,12 @@ import java.util.List;
 
 @Entity
 public class RecomendadorAntigoEspecial extends RecomendadorAntigo {
+    private static final int LIMITEDEEPISODIOS = 3;
+
     public RecomendadorAntigoEspecial(){}
 
     @Override
     public Episodio getProximoEpisodio(Serie serie) {
-        Episodio episodioMaisAntigo;
         for (Temporada temporada: serie.getTemporadas()){
             for (Episodio episodio: temporada.getEpisodios()){
                 if (!episodio.isAssistido() && !tem3EpisodiosAssistidosApos(serie.getTemporadas(), episodio)){
@@ -38,7 +39,7 @@ public class RecomendadorAntigoEspecial extends RecomendadorAntigo {
                 } else if (episodios.get(j).isAssistido()){
                     contador++;
                 }
-                if (contador >= 3){
+                if (contador >= LIMITEDEEPISODIOS){
                     return true;
                 }
             }
