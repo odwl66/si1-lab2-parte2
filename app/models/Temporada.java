@@ -77,7 +77,7 @@ public class Temporada implements Comparable<Temporada> {
 	}
 
 	public Episodio episodioMaisAntigoNaoAssistido(){
-		for (Episodio episodio: episodios){
+		for (Episodio episodio: getEpisodios()){
 			if(!episodio.isAssistido()){
 				return episodio;
 			}
@@ -91,14 +91,11 @@ public class Temporada implements Comparable<Temporada> {
 			if (episodios.get(i).isAssistido()){
 				contador+=1;
 			}
-		}
-		if (contador==episodios.size()) {
+		} if (contador==episodios.size()) {
 			setAssistida(1);
-		}
-		else if (contador>0) {
+		} else if (contador>0) {
 			setAssistida(0);
-		}
-		else {
+		} else {
 			setAssistida(-1);
 		}
 	}
